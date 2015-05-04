@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="TextFile\CsvUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextFile\IniFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Condition="Exists('$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets')"
