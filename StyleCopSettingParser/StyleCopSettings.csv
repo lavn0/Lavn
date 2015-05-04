@@ -104,7 +104,7 @@ TRUE,StyleCop.CSharp.LayoutRules,SA1513,ClosingCurlyBracketMustBeFollowedByBlank
 TRUE,StyleCop.CSharp.LayoutRules,SA1514,ElementDocumentationHeaderMustBePrecededByBlankLine,ドキュメントヘッダがスコープの先頭に無い場合は、直前に空行を入れてください。,ドキュメントヘッダがスコープの先頭に無い場合は、直前に空行があることを検証する。
 TRUE,StyleCop.CSharp.LayoutRules,SA1515,SingleLineCommentMustBePrecededByBlankLine,１行コメントの前の行が、他の１行コメント又はスコープの先頭で無い場合は、空行を入れてください。このエラーを無視する場合は、コメントを「//」の代わりに「////」で始めてください。,コメントの直前に空行があるか、コメントがスコープが最初にあるかを検証する。
 TRUE,StyleCop.CSharp.LayoutRules,SA1516,ElementsMustBeSeparatedByBlankLine,隣接している要素は、空行で区切ってください。,隣接している要素が空行で区切られているか検証します。
-FALSE,StyleCop.CSharp.DocumentationRules,SA1600,ElementsMustBeDocumented,{0}はドキュメントヘッダが必要です。,要素のドキュメントヘッダの形式が正しいか検証する。
+TRUE,StyleCop.CSharp.DocumentationRules,SA1600,ElementsMustBeDocumented,{0}はドキュメントヘッダが必要です。,要素のドキュメントヘッダの形式が正しいか検証する。
 TRUE,StyleCop.CSharp.DocumentationRules,SA1601,PartialElementsMustBeDocumented,partial 要素{0}は概要（summary）タグ又はコンテンツ（content）タグを含むヘッダが必要です。,partialクラス、構造体たどに正しい形式の概要（summary）タグ又はコンテンツ(content)タグが含まれているか検証する。
 TRUE,StyleCop.CSharp.DocumentationRules,SA1602,EnumerationItemsMustBeDocumented,enumerationのサブアイテムにドキュメントヘッダが必要です。,enumerationを含む項目が正しき形式のドキュメントヘッダを含むか検証する。
 TRUE,StyleCop.CSharp.DocumentationRules,SA1603,DocumentationMustContainValidXml,ドキュメントヘッダに不正なXMLが含まれています： {0},ドキュメントヘッダに不正なXMLが含まれていて、解析できないかを検証する。
