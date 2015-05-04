@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Linq\Linqx.cs" />
+    <Compile Include="Linq\Linqx_Count.cs" />
     <Compile Include="TextFile\CsvUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextFile\IniFile.cs" />
