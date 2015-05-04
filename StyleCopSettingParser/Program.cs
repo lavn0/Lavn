@@ -15,7 +15,7 @@ namespace StyleCopSettingParser
 			var fileName = "StyleCopSettings.csv";
 			var outputFileName = args.FirstOrDefault() ?? @"..\..\..\Settings.StyleCop";
 
-			var str = File.ReadAllText(fileName);
+			var str = File.ReadAllText(fileName, Encoding.GetEncoding("SHIFT_JIS"));
 			var root = new XElement("StyleCopSettings");
 			root.Add(new XAttribute("Version", "105"));
 			var analyzers = new XElement("Analyzers");
