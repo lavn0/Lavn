@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{343F301F-45FF-4797-A7E8-E77112A40A08}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{DECF17BB-BD4E-45D5-9B35-3A8340132B1B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lavn</RootNamespace>
-    <AssemblyName>Lavn</AssemblyName>
+    <RootNamespace>StyleCopSettingParser</RootNamespace>
+    <AssemblyName>StyleCopSettingParser</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,15 +25,13 @@
     <CodeAnalysisRuleSet>..\Solution Items\AllRuleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,12 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextFile\CsvUtility.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="StyleCopSettings.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lavn\Lavn.csproj">
+      <Project>{343f301f-45ff-4797-a7e8-e77112a40a08}</Project>
+      <Name>Lavn</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Condition="Exists('$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets')"
-          Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

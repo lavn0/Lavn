@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("Lavn")]
+[assembly: AssemblyTitle("StyleCopSettingParser")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lavn")]
+[assembly: AssemblyProduct("StyleCopSettingParser")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: CLSCompliant(true)]
 
 // ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから 
 // 参照不可能になります。COM からこのアセンブリ内の型にアクセスする場合は、
@@ -22,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 次の GUID は、このプロジェクトが COM に公開される場合の、typelib の ID です
-[assembly: Guid("fb79f27f-d0ac-462e-a8d2-c5a19eb00467")]
+[assembly: Guid("cc5626f3-914d-44c5-90a1-a2d37698a919")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //
