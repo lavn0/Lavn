@@ -35,7 +35,7 @@ namespace Lavn.Linq
 		/// <returns>指定した個数より少ない場合、true</returns>
 		public static bool CountUnder<TSource>(this IEnumerable<TSource> source, int count)
 		{
-			return count <= 1 ? false : source.ElementAtOrDefault(count - 1) == null;
+			return count < 1 ? false : source.ElementAtOrDefault(count - 1) == null;
 		}
 
 		/// <summary>指定した個数より少ない評価します</summary>
@@ -46,7 +46,7 @@ namespace Lavn.Linq
 		/// <returns>指定した個数より少ない場合、true</returns>
 		public static bool CountUnder<TSource>(this IEnumerable<TSource> source, int count, Func<TSource, bool> predicate)
 		{
-			return count <= 1 ? false : source.Where(predicate).ElementAtOrDefault(count - 1) == null;
+			return count < 1 ? false : source.Where(predicate).ElementAtOrDefault(count - 1) == null;
 		}
 
 		/// <summary>指定した個数かどうか評価します</summary>

@@ -50,8 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Linq\Linqx.cs" />
     <Compile Include="Linq\Linqx_Count.cs" />
+    <Compile Include="Linq\Linqx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
