@@ -1,4 +1,6 @@
-﻿using Lavn.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Lavn.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject.Linq
@@ -7,193 +9,120 @@ namespace UnitTestProject.Linq
 	public class Linqx
 	{
 		[TestMethod, TestCategory("Linqx")]
-		public void CountOver_False()
+		public void MixedResult_True()
 		{
 			var result = new[] {
 				"Start_Test1_End",
 				"Start_Test2_End",
 				"Start_Test3_End",
-			}.CountOver(3);
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountOver_Predicate_True()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountOver(2, e => e.Contains("Test"));
+			}.MixedResult(e => e.StartsWith("Start"));
 			Assert.AreEqual(true, result);
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountOver_Predicate_False()
+		public void MixedResult_False()
 		{
 			var result = new[] {
 				"Start_Test1_End",
 				"Start_Test2_End",
 				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountOver(3, e => e.Contains("Test"));
+			}.MixedResult(e => e.EndsWith("Start"));
 			Assert.AreEqual(false, result);
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_True1()
-		{
-			var result = new string[] {
-			}.CountUnder(1);
-			Assert.AreEqual(true, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_True2()
+		public void MixedResult_Null()
 		{
 			var result = new[] {
 				"Start_Test1_End",
 				"Start_Test2_End",
 				"Start_Test3_End",
-			}.CountUnder(4);
-			Assert.AreEqual(true, result);
+			}.MixedResult(e => e.Contains("Test1"));
+			Assert.AreEqual(null, result);
+		}
+
+
+		private class HierarchicalClass
+		{
+			public int Sid { get; set; }
+			public List<HierarchicalClass> Child { get; set; }
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_False1()
+		public void Descendants_Flat1()
 		{
-			var result = new string[] {
-			}.CountUnder(0);
-			Assert.AreEqual(false, result);
+			var root = new HierarchicalClass();
+			root.Child = new List<HierarchicalClass>();
+			root.Child.Add(new HierarchicalClass() { Sid = 0 });
+			root.Child.Add(new HierarchicalClass() { Sid = 1 });
+			root.Child.Add(new HierarchicalClass() { Sid = 2 });
+
+			var result = root.Child.Descendants(e => e.Child).ToList();
+			Assert.IsTrue(result.Select(e => e.Sid).SequenceEqual(new[] { 0, 1, 2 }));
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_False2()
+		public void Descendants_Flat2()
 		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-			}.CountUnder(3);
-			Assert.AreEqual(false, result);
+			var root = new HierarchicalClass();
+			root.Child = new List<HierarchicalClass>();
+			root.Child.Add(new HierarchicalClass() { Sid = 0 });
+			root.Child.Add(new HierarchicalClass() { Sid = 1, Child = new List<HierarchicalClass>() });
+			root.Child.Add(new HierarchicalClass() { Sid = 2 });
+
+			var result = root.Child.Descendants(e => e.Child).ToList();
+			Assert.IsTrue(result.Select(e => e.Sid).SequenceEqual(new[] { 0, 1, 2 }));
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_Predicate_True1()
+		public void Descendants_Hierarchical1()
 		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountUnder(1, e => e.Contains("AAA"));
-			Assert.AreEqual(true, result);
+			var root = new HierarchicalClass();
+			root.Child = new List<HierarchicalClass>();
+			root.Child.Add(new HierarchicalClass() { Sid = 0 });
+			root.Child.Add(new HierarchicalClass()
+			{
+				Sid = 1,
+				Child = new List<HierarchicalClass>()
+				{
+					new HierarchicalClass() { Sid = 2 },
+					new HierarchicalClass() { Sid = 3 },
+					new HierarchicalClass() { Sid = 4 },
+				}
+			});
+			root.Child.Add(new HierarchicalClass() { Sid = 5 });
+
+			var result = root.Child.Descendants(e => e.Child).ToList();
+			Assert.IsTrue(result.Select(e => e.Sid).SequenceEqual(new[] { 0, 1, 2, 3, 4, 5 }));
 		}
 
 		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_Predicate_True2()
+		public void Descendants_Hierarchical2()
 		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountUnder(4, e => e.Contains("Test"));
-			Assert.AreEqual(true, result);
-		}
+			var root = new HierarchicalClass();
+			root.Child = new List<HierarchicalClass>();
+			root.Child.Add(new HierarchicalClass() { Sid = 0 });
+			root.Child.Add(new HierarchicalClass()
+			{
+				Sid = 1,
+				Child = new List<HierarchicalClass>()
+				{
+					new HierarchicalClass() { Sid = 2 },
+					new HierarchicalClass()
+					{
+						Sid = 3,
+						Child = new List<HierarchicalClass>()
+						{
+							new HierarchicalClass() { Sid = 4 },
+						},
+					},
+					new HierarchicalClass() { Sid = 5 },
+				}
+			});
+			root.Child.Add(new HierarchicalClass() { Sid = 6 });
 
-		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_Predicate_False1()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountUnder(0, e => e.Contains("AAA"));
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountUnder_Predicate_False2()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountUnder(3, e => e.Contains("Test"));
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_True()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-			}.CountEquals(3);
-			Assert.AreEqual(true, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_False1()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-			}.CountEquals(2);
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_False2()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-			}.CountEquals(4);
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_Predicate_True()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountEquals(3, e => e.Contains("Test"));
-			Assert.AreEqual(true, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_Predicate_False1()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountEquals(2, e => e.Contains("Test"));
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod, TestCategory("Linqx")]
-		public void CountEquals_Predicate_False2()
-		{
-			var result = new[] {
-				"Start_Test1_End",
-				"Start_Test2_End",
-				"Start_Test3_End",
-				"Start_XXXX4_End",
-			}.CountEquals(4, e => e.Contains("Test"));
-			Assert.AreEqual(false, result);
+			var result = root.Child.Descendants(e => e.Child).ToList();
+			Assert.IsTrue(result.Select(e => e.Sid).SequenceEqual(new[] { 0, 1, 2, 3, 4, 5, 6 }));
 		}
 	}
 }

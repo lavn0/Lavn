@@ -35,5 +35,28 @@ namespace Lavn.Linq
 
 			return result;
 		}
+
+		/// <summary>階層構造を展開します</summary>
+		/// <typeparam name="TSource"></typeparam>
+		/// <param name="source"></param>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public static IEnumerable<TSource> Descendants<TSource>(this IEnumerable<TSource> source, Func<TSource, IEnumerable<TSource>> predicate)
+		{
+			foreach (var item in source)
+			{
+				yield return item;
+				var sequence = predicate(item);
+				if (sequence == null)
+				{
+					continue;
+				}
+
+				foreach (var child in sequence.Descendants(predicate))
+				{
+					yield return child;
+				}
+			}
+		}
 	}
 }
